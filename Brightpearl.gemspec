@@ -14,4 +14,7 @@ Gem::Specification.new do |gem|
   gem.name          = "Brightpearl"
   gem.require_paths = ["lib"]
   gem.version       = Brightpearl::VERSION
+
+  gem.add_dependency 'rest-client'
+  gem.add_dependency 'rspec'
 end
