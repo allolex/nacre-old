@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Nacre::Product do
+describe Nacre::Service::Product do
 
   before :all do
     @config = 'config/test_config.yml'
@@ -9,6 +9,6 @@ describe Nacre::Product do
   end
 
   it 'can be instantiated' do
-    @prod.should be_a(Nacre::Product)
+    @prod.should be_a(Nacre::Service::Product)
   end
 end
