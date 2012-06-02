@@ -28,6 +28,6 @@ describe Nacre do
 
   it 'should authenticate to the Nacre web API' do
     # fe54961f-8adf-4d00-8bd3-185a479e827a
-    @bp.auth_token.should match(/^[a-z0-9]{8}-(?:[a-z0-9]{4}-){3}[a-z0-9]{12}$/)
+    @bp.auth_token.to_s.should match(/^[a-z0-9]{8}-(?:[a-z0-9]{4}-){3}[a-z0-9]{12}$/)
   end
 end

@@ -1,4 +1,4 @@
-require 'Nacre'
+require 'nacre'
 require 'psych'
 require 'rest-client'
 require 'json'
@@ -28,7 +28,11 @@ module Nacre
       end
     end
 
-    private
+    def product
+      @product ||= Product.new( token: @auth_token )
+    end
+
+  private
 
     def password
       @password
@@ -44,6 +48,7 @@ module Nacre
     end
 
     def authenticate
+      @auth_token = nil
       uri = URI.parse( "https://ws-%s.brightpearl.com/%s/authorise" % [@distribution_centre, @id] )
       message = {
         apiAccountCredentials: {
@@ -53,12 +58,7 @@ module Nacre
       }.to_json
       response = RestClient.post uri.to_s, message, :content_type => :json, :accept => :json
       auth = JSON.parse(response.body)
-      if auth['response'] =~ /^[a-z0-9]{8}-(?:[a-z0-9]{4}-){3}[a-z0-9]{12}$/i
-        @auth_token = auth['response']
-        return true
-      else
-        return false
-      end
+      @auth_token = Token.new(auth['response'])
     end
   end
 end
