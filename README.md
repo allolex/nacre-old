@@ -1,24 +1,36 @@
-# Brightpearl
+# Nacre
 
-TODO: Write a gem description
+Nacre is an interface to the Brightpearl accounting software service. It
+uses the Brightpearl API.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'Brightpearl'
+    gem "nacre", :git => "git://github.com/allolex/nacre.git"
 
 And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install Brightpearl
-
 ## Usage
 
-TODO: Write usage instructions here
+This gem isn't really very functional as of yet, so for now you can look
+at the tests to see how it's used.
+
+## Features
+
+- Configuration support. See config/ for a sample YAML file.
+- API authentication
+
+## Todo
+
+- Services
+  - Product
+  - Accounting
+  - Order
+  - Contact
+  - Warehouse
 
 ## Contributing
 
