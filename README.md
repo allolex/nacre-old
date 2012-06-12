@@ -1,7 +1,9 @@
 # Nacre
 
-Nacre is a Ruby interface to the Brightpearl accounting software service. It
+Nacre is a Ruby wrapper around the Brightpearl accounting software service. It
 uses the Brightpearl API.
+
+http://www.brightpearl.com/developer/latest/
 
 ## Installation
 
