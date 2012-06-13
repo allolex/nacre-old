@@ -1,5 +1,4 @@
 require 'nacre'
-require 'rest-client'
 require 'json'
 
 module Nacre

@@ -12,6 +12,7 @@ module Nacre
       else
         fail TokenError
       end
+      self
     end
 
     def to_s

@@ -1,6 +1,7 @@
 require 'nacre/version'
 require 'nacre/api'
 require 'nacre/config'
+require 'nacre/connection'
 require 'nacre/token'
 require 'nacre/service'
 require 'nacre/service/accounting'
