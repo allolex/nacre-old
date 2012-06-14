@@ -1,9 +1,6 @@
 require 'nacre'
-require 'psych'
 require 'faraday'
 require 'JSON'
-
-require 'pp'
 
 module Nacre
 
@@ -22,11 +19,11 @@ module Nacre
     end
 
     def product
-      @product ||= Nacre::Product.new( token: @auth_token )
+      @product ||= Nacre::Product.new( token: self.token )
     end
 
     def auth_url
-      "#{@config.base_url}/#{@config.id}/authorise"
+      "#{self.config.base_url}/#{self.config.id}/authorise"
     end
 
   private
@@ -34,12 +31,11 @@ module Nacre
     def authenticate
       message = {
         apiAccountCredentials: {
-              emailAddress: @config.email,
-              password:     @config.password
+              emailAddress: self.config.email,
+              password:     self.config.password
         }
       }.to_json
-      @current_response = @connection.post self.auth_url, message,
-        { 'Content-Type' => 'application/json', 'Accept' => 'json' }
+      @current_response = @connection.post self.auth_url, message, self.config.header
       @auth = JSON.parse(@current_response.body)
       @token = Nacre::Token.new(@auth['response'])
     end
