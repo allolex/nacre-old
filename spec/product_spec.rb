@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'pp'
 
 describe Nacre::Service::Product do
 
@@ -20,17 +21,17 @@ describe Nacre::Service::Product do
 
     it 'return a valid product API URL' do
       @product.url.to_s.should ==
-        'https://ws-eu1.brightpearl.com/2.0.0/allolex/product'
+        'https://ws-eu1.brightpearl.com/2.0.0/allolex/product-service'
     end
 
     it 'return a valid product search URL' do
       @product.search_url.to_s.should ==
-        'https://ws-eu1.brightpearl.com/2.0.0/allolex/product-search'
+        'https://ws-eu1.brightpearl.com/2.0.0/allolex/product-service/product-search'
     end
 
     it 'return a list of products when using the "list" method' do
       @product.list.should be_a(Array)
-      @product.list.first.should be_a(Nacre::Product)
+      @product.list.first.should be_a(Nacre::Model::Product)
     end
   end
 end

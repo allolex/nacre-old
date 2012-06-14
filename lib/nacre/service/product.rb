@@ -1,4 +1,6 @@
 require 'nacre'
+require 'JSON'
+require 'pp'
 
 module Nacre
 
@@ -11,7 +13,7 @@ module Nacre
     end
 
     def url
-      "#{self.api.config.url}/product"
+      "#{self.api.config.url}/product-service"
     end
 
     def search_url
@@ -19,7 +21,11 @@ module Nacre
     end
 
     def list
-      response = self.api.connection.get self.search_url, self.api.config.header
+      self.api.connection.headers['brightpearl-auth'] = self.api.token.to_s
+      self.api.connection.headers['Content-Type'] = 'application/json'
+      response = self.api.connection.get self.search_url, {}
+      hash = JSON.parse response.body
+      hash['response']['results']
     end
 
   end
