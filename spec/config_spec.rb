@@ -29,7 +29,7 @@ describe Nacre::Config do
   describe 'should raise an error' do
 
     it 'if required arguments are missing' do
-      @file = 'config/test_bad_config.yml'
+      @file = 'spec/fixtures/test_bad_config.yml'
       expect { Nacre::Config.new( file: @file )
         }.to raise_error
     end

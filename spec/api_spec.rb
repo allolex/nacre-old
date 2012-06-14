@@ -15,4 +15,8 @@ describe Nacre do
     # fe54961f-8adf-4d00-8bd3-185a479e827a
     @bp.token.is_valid?.should be_true
   end
+
+  it 'should insert the token into the config request header' do
+    @bp.config.header['brightpearl-auth'].should == @bp.token.to_s
+  end
 end

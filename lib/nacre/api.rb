@@ -13,13 +13,10 @@ module Nacre
       @connection = Faraday.new
       begin
         authenticate
+        self.config.header['brightpearl-auth'] = self.token.to_s
       rescue
         puts "Authentication failure"
       end
-    end
-
-    def product
-      @product ||= Nacre::Product.new( token: self.token )
     end
 
     def auth_url
