@@ -18,4 +18,11 @@ describe Nacre::ProductModel do
                               :stock_tracked, :sales_channel, :created, :updated,
                               :bp_category, :product_group ]
   end
+
+  it 'should contain the correct model data' do
+    @model.product_id.should == 1000
+    @model.sales_channel.should == 'Brightpearl'
+    @model.sku.should == ''
+    @model.ean.should be_nil
+  end
 end
