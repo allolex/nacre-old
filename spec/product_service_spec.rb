@@ -1,18 +1,17 @@
 require 'spec_helper'
-require 'pp'
 
-describe Nacre::Service::Product do
+describe Nacre::ProductService do
 
   describe 'should' do
 
     before :each do
       @config = 'config/test_config.yml'
       @bp = Nacre::Api.new( file: @config )
-      @product = Nacre::Service::Product.new( @bp )
+      @product = Nacre::ProductService.new( @bp )
     end
 
     it 'allow an instance to be created' do
-      @product.should be_a(Nacre::Service::Product)
+      @product.should be_a(Nacre::ProductService)
     end
 
     it 'allow access to configuration' do
@@ -31,7 +30,7 @@ describe Nacre::Service::Product do
 
     it 'return a list of products when using the "list" method' do
       @product.list.should be_a(Array)
-      @product.list.first.should be_a(Nacre::Model::Product)
+      @product.list.first.should be_a(Nacre::ProductModel)
     end
   end
 end

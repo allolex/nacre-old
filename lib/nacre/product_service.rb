@@ -1,10 +1,9 @@
 require 'nacre'
 require 'JSON'
-require 'pp'
 
 module Nacre
 
-  class Service::Product
+  class ProductService
 
     attr_reader :api
 
@@ -21,11 +20,16 @@ module Nacre
     end
 
     def list
+      results = []
       self.api.connection.headers['brightpearl-auth'] = self.api.token.to_s
       self.api.connection.headers['Content-Type'] = 'application/json'
       response = self.api.connection.get self.search_url, {}
       hash = JSON.parse response.body
-      hash['response']['results']
+      hash['response']['results'].each do |result|
+        model = Nacre::ProductModel.new result
+        results << model
+      end
+      return results
     end
 
   end
