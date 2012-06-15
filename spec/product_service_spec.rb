@@ -30,7 +30,7 @@ describe Nacre::ProductService do
 
     it 'return a list of products when using the "list" method' do
       @product.list.should be_a(Array)
-      @product.list.first.should be_a(Nacre::ProductModel)
+      @product.list.first.should be_a(Nacre::ProductSearchResult)
     end
   end
 end

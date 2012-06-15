@@ -26,7 +26,7 @@ module Nacre
       response = self.api.connection.get self.search_url, {}
       hash = JSON.parse response.body
       hash['response']['results'].each do |result|
-        model = Nacre::ProductModel.new result
+        model = Nacre::ProductSearchResult.new result
         results << model
       end
       return results

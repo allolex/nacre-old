@@ -1,6 +1,6 @@
 module Nacre
 
-  class Model
+  class SearchResult
 
     attr_reader :fields
 

@@ -2,7 +2,7 @@ require 'nacre'
 
 module Nacre
 
-  class ProductModel < Model
+  class ProductSearchResult < SearchResult
 
     # productId               | true | true  | INTEGER       | N/A | false
     # productName             | true | true  | SEARCH_STRING | N/A | false
