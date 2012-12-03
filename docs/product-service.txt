@@ -1,0 +1,33 @@
+# The Product Service #
+
+Base URI
+/product-service/product/{ID-SET}
+
+Refer to our documentation on URI syntax for more information on how to construct URIs.
+
+Description
+
+Returns the ID , identity, stock, sales channels and composition of a product
+
+brandId          : The Id of the brand of which this product is assigned.
+productTypeId    : The Id of the Product Type.
+identity         : details such information as the SKU, ISBN, EAN and UPC of the product
+productGroupId   : The id of which this product is a group of.
+stock            : details information pertinent to stock/inventory i.e. is the product stock tracked
+financialDetails : details financial information of the product.
+salesChannels    : details information pertinent to a sales channel. A sales channel is a means of selling the product. The default sales channel is the Brightpearl Ecommerce store, other channels can be obtain by the use of the query parameter contextChannelId (value channel id).Default channel information includes details such as the name of the channel, product name, product condition, categories and translated descriptions/short descriptions of the product. For other channel the sales channel shall also include availableToSellOnChannel and sellWhenNoStock.
+composition      : details the composition of the product i.e. is a bundle
+bundleComponents : details the component products of the bundle.
+
+bundleComponent Fields | Description
+productId              | the productId of the bundle component product.
+productQuantity        | the quantity of bundle component product.
+composition            | the composition of the bundle component product.
+
+variations       : This section is for information regarding the variations for a product.
+customFields     : A map of custom field Code to value. (Optional)
+nullCustomFields : A List of custom field Code's which currently have a value of Null. (Optional)
+
+Note: the ID set in the request URI is not optional. It is not possible to get all Product's in a single call. The request can be limited to the context of a sales channel by the use of the query parameter contextChannelId (value channel id); only products assigned to this channel shall be returned.The Product OPTIONS message will programmatically explain how to download all Product's in multiple calls.
+
+Note: to include customFields and nullCustomFields please see Include Optional Sections.
