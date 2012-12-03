@@ -20,7 +20,8 @@ module Nacre
     end
 
     def auth_url
-      "#{self.config.base_url}/#{self.config.id}/authorise"
+      endpoint = "#{self.config.base_url}/#{self.config.id}/authorise"
+      endpoint
     end
 
   private
