@@ -1,16 +1,18 @@
 require 'spec_helper'
 
-describe Nacre::ProductSearchResult do
+describe Nacre::API::ProductSearchResult do
 
   before :all do
+    @config = 'config/test_config.yml'
+    @api = Nacre::Api.new( file: @config )
     @list = [ 1000, "Misc item without VAT", "", nil, nil, nil, false,
               "Brightpearl", "2007-05-29T10:42:08.000+01:00",
               "2007-09-08T14:42:45.000+01:00", "276", 0 ]
-    @model = Nacre::ProductSearchResult.new @list
+    @model = Nacre::API::ProductSearchResult.new @list
   end
 
   it 'should be possible to instantiate the class' do
-    @model.should be_a(Nacre::ProductSearchResult)
+    @model.should be_a(Nacre::API::ProductSearchResult)
   end
 
   it 'should have a list of fields' do

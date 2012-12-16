@@ -24,13 +24,22 @@ module Nacre
       endpoint
     end
 
+    def product
+      @product ||= Nacre::API::Product.new(self)
+    end
+
+    def set_headers
+      @connection.token = self.token.to_s
+      @connection.content_type = 'application/json'
+    end
+
   private
 
     def authenticate
       message = {
         apiAccountCredentials: {
-              emailAddress: self.config.email,
-              password:     self.config.password
+          emailAddress: self.config.email,
+          password:     self.config.password
         }
       }.to_json
       @current_response = @connection.post self.auth_url, message, self.config.header
