@@ -16,6 +16,6 @@ spec/reports
 test/tmp
 test/version_tmp
 tmp
-config/test_config.yml
+config/test*
 sandbox
 sandbox/*
