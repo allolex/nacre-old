@@ -21,10 +21,15 @@ module Nacre
 
       def list
         results = []
-        response = self.api.connection.get self.search_url, {}
+        response = nil
+        begin
+          response = @api.connection.connection.get self.search_url, {}, @api.config.header
+        rescue
+          raise "Error in response: #{response.body.inspect}\n#{@api.inspect}"
+        end
         hash = JSON.parse response.body
         hash['response']['results'].each do |result|
-          model = Nacre::ProductSearchResult.new result
+          model = Nacre::API::ProductSearchResult.new result
           results << model
         end
         return results

@@ -22,4 +22,9 @@ describe Nacre::API::Product do
       'https://ws-eu1.brightpearl.com/2.0.0/allolex/product-service/product-search'
   end
 
+  it 'should return a list of all products' do
+    @product.list.should be_a(Array)
+    @product.list.first.should be_a(Nacre::API::ProductSearchResult)
+  end
+
 end

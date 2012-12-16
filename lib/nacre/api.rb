@@ -10,10 +10,10 @@ module Nacre
 
     def initialize args
       @config = Nacre::Config.new args
-      @connection = Faraday.new
+      @connection = Nacre::Connection.new
       begin
         authenticate
-        self.config.header['brightpearl-auth'] = self.token.to_s
+        self.config.header['brightpearl-auth'] = self.connection.token.to_s
       rescue
         puts "Authentication failure"
       end
@@ -42,9 +42,9 @@ module Nacre
           password:     self.config.password
         }
       }.to_json
-      @current_response = @connection.post self.auth_url, message, self.config.header
+      @current_response = @connection.connection.post self.auth_url, message, self.config.header
       @auth = JSON.parse(@current_response.body)
-      @token = Nacre::Token.new(@auth['response'])
+      @token = @connection.token = Nacre::Token.new(@auth['response'])
     end
   end
 end
