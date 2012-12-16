@@ -28,12 +28,16 @@ module Nacre
       @product ||= Nacre::API::Product.new(self)
     end
 
+    def order
+      @order ||= Nacre::API::Order.new(self)
+    end
+
     def set_headers
       @connection.token = self.token.to_s
       @connection.content_type = 'application/json'
     end
 
-  private
+    private
 
     def authenticate
       message = {
@@ -46,6 +50,7 @@ module Nacre
       @auth = JSON.parse(@current_response.body)
       @token = @connection.token = Nacre::Token.new(@auth['response'])
     end
-  end
-end
 
+  end
+
+end

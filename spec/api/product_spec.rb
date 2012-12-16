@@ -14,12 +14,12 @@ describe Nacre::API::Product do
 
   it 'should return a valid product API URL' do
     @product.url.to_s.should ==
-      'https://ws-eu1.brightpearl.com/2.0.0/allolex/product-service'
+      'https://ws-eu1.brightpearl.com/2.0.0/damonclone/product-service'
   end
 
   it 'should return a valid product search URL' do
     @product.search_url.to_s.should ==
-      'https://ws-eu1.brightpearl.com/2.0.0/allolex/product-service/product-search'
+      'https://ws-eu1.brightpearl.com/2.0.0/damonclone/product-service/product-search'
   end
 
   it 'should return a list of all products' do
