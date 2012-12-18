@@ -20,6 +20,8 @@ And then execute:
 This gem isn't really very functional as of yet, so for now you can look
 at the tests to see how it's used.
 
+Make sure you copy the sample config file to test_config.yml and add your credentials.
+
 ## Features
 
 - Configuration support. See config/ for a sample YAML file.
