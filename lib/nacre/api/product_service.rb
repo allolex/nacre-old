@@ -5,7 +5,7 @@ module Nacre
 
   module API
 
-    class Product
+    class ProductService
 
       def initialize api
         @api = api

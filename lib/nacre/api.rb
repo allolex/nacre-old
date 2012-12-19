@@ -25,11 +25,11 @@ module Nacre
     end
 
     def product
-      @product ||= Nacre::API::Product.new(self)
+      @product_service ||= Nacre::API::Product.new(self)
     end
 
     def order
-      @order ||= Nacre::API::Order.new(self)
+      @order_service ||= Nacre::API::Order.new(self)
     end
 
     def set_headers
