@@ -14,11 +14,15 @@ module Nacre
 
     def initialize(args)
       if File.exists? args[:file]
+        self.file = args[:file]
         load_file args[:file]
+      else
+        raise "File not found"
       end
       load_values args
-      REQUIRED.each do |method|
-        raise "#{method.to_s} required" unless validates? method
+
+      REQUIRED.each do |field|
+        raise "#{field.to_s} required" unless has_been_set? field
       end
       @header = { 'Content-Type' => 'application/json', 'Accept' => 'json' }
     end
@@ -46,8 +50,9 @@ module Nacre
       return true
     end
 
-    def validates? method
-      return true if self.send(method).length > 1
+    def has_been_set? field
+      field_value = self.send(field)
+      field_value && !field_value.empty?
     end
   end
 end
