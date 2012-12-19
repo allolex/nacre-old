@@ -1,22 +1,67 @@
 require 'spec_helper'
 
 describe Nacre do
+    before do
+        @config = 'spec/fixtures/test_config.yml'
+        Nacre::Connection.stub(:new)
+    end
 
-  before :all do
-    @config = 'config/test_config.yml'
-    @bp = Nacre::Api.new( file: @config )
-  end
+    describe "initializing" do
+        it 'can be instantiated' do
+            bp = Nacre::Api.new( file: @config )
+            bp.should be_a(Nacre::Api)
+        end
 
-  it 'can be instantiated' do
-    @bp.should be_a(Nacre::Api)
-  end
+        it 'sets its config' do
+            bp = Nacre::Api.new( file: @config )
+            
+            bp.config.file.should == 'spec/fixtures/test_config.yml'
+            bp.config.email.should == 'your_brightpearl_user_email'
+            bp.config.password.should == 'your_brightpearl_password'
+            bp.config.distribution_centre.should == 'eu1'
+            bp.config.api_version.should == '2.0.0'
+        end
+        
+        it 'creates and calls connect on a Nacre::Connection' do
+            connection = mock("connection")
+            auth_data = mock("auth data")
+            auth_url = mock("auth url")
+            api_url = mock("api url")
 
-  it 'should authenticate to the Nacre web API' do
-    # fe54961f-8adf-4d00-8bd3-185a479e827a
-    @bp.token.is_valid?.should be_true
-  end
+            Nacre::Api.any_instance.should_receive(:auth_data).and_return auth_data
+            Nacre::Config.any_instance.should_receive(:auth_url).and_return auth_url
+            Nacre::Config.any_instance.should_receive(:api_url).and_return api_url
 
-  it 'should insert the token into the config request header' do
-    @bp.config.header['brightpearl-auth'].should == @bp.token.to_s
-  end
+            connection_params = {
+                auth_data: auth_data,
+                auth_url: auth_url,
+                api_url: api_url
+            }
+
+            Nacre::Connection.should_receive(:new).with(connection_params).and_return(connection)
+
+            #connection.should_receive :connect
+
+            bp = Nacre::Api.new( file: @config )
+        end
+    end
+
+    describe "#auth_data" do
+        context "if config is valid" do
+            it "generates auth data json from username and password" do
+                bp = Nacre::Api.new( file: @config )
+                
+                JSON.parse(bp.send(:auth_data)).should == {
+                    "apiAccountCredentials" => {
+                        "emailAddress" => 'your_brightpearl_user_email',
+                        "password" => 'your_brightpearl_password'
+                    }
+                }
+            end
+        end
+
+        context "if config is not valid" do
+            pending "should return nil"
+        end
+    end
 end

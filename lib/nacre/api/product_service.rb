@@ -2,9 +2,7 @@ require 'nacre'
 require 'JSON'
 
 module Nacre
-
   module API
-
     class ProductService
 
       def initialize api
@@ -12,7 +10,7 @@ module Nacre
       end
 
       def url
-        "#{@api.config.url}/product-service"
+        "/product-service"
       end
 
       def search_url

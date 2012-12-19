@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Nacre::Config do
   context 'a good configuration file' do
     before :all do
-      @file = 'fixtures/test_config.yml'
+      @file = 'spec/fixtures/test_config.yml'
       @cfg = Nacre::Config.new(file: @file)
     end
 
@@ -25,7 +25,7 @@ describe Nacre::Config do
 
   context 'a configuration file with missing fields' do
     it 'should raise an error' do
-      @file = 'fixtures/test_bad_config.yml'
+      @file = 'spec/fixtures/test_bad_config.yml'
       expect { Nacre::Config.new(file: @file)
       }.to raise_error "password required"
     end
@@ -33,9 +33,25 @@ describe Nacre::Config do
 
   context 'a nonexistent configuration file' do
     it 'should raise an error' do
-      @file = 'fixtures/nonexistent_config.yml'
+      @file = 'spec/fixtures/nonexistent_config.yml'
       expect { Nacre::Config.new(file: @file)
       }.to raise_error "File not found"
     end
   end
+
+  context "url generation" do
+      before do
+          @file = 'spec/fixtures/test_config.yml'
+          @cfg = Nacre::Config.new(file: @file)
+      end
+
+      it "constructs the api URL from the config" do
+          @cfg.api_url.should == URI.parse("https://ws-eu1.brightpearl.com/2.0.0/your_brightpearl_id")
+      end
+
+      it "constructs the auth URL from the config" do
+          @cfg.auth_url.should == URI.parse("https://ws-eu1.brightpearl.com/your_brightpearl_id/authorise")
+      end
+  end
+
 end

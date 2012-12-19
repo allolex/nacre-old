@@ -31,8 +31,12 @@ module Nacre
        URI.parse( "https://ws-%s.brightpearl.com" % [self.distribution_centre] )
     end
 
-    def url
-      self.base_url + "/#{api_version}/#{id}"
+    def api_url
+      base_url + "/#{api_version}/#{id}"
+    end
+
+    def auth_url
+      base_url + "/#{id}/authorise"
     end
 
   private
