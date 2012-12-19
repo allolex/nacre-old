@@ -4,7 +4,7 @@ module Nacre
 
   module API
 
-    class ProductSearchResult < Nacre::API::SearchResult
+    class ProductSearchResult
 
       # productId               | true | true  | INTEGER       | N/A | false
       # productName             | true | true  | SEARCH_STRING | N/A | false
