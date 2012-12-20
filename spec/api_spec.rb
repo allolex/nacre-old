@@ -51,10 +51,10 @@ describe Nacre do
             it "generates auth data json from username and password" do
                 bp = Nacre::Api.new( file: @config )
                 
-                JSON.parse(bp.send(:auth_data)).should == {
-                    "apiAccountCredentials" => {
-                        "emailAddress" => 'your_brightpearl_user_email',
-                        "password" => 'your_brightpearl_password'
+                bp.send(:auth_data).should == {
+                    apiAccountCredentials: {
+                        emailAddress: 'your_brightpearl_user_email',
+                        password: 'your_brightpearl_password'
                     }
                 }
             end

@@ -1,13 +1,21 @@
 require 'faraday'
 
 module Nacre
-
   class Connection
-
     attr_accessor :connection
 
-    def initialize
+    def initialize(params)
+      @auth_url = params[:auth_url]
+      @api_url = params[:api_url]
+      @auth_data = params[:auth_data]
+
+      @header_base = { 
+        'Content-Type' => 'application/json', 
+        'Accept' => 'json' 
+      }
+
       @connection = Faraday.new
+      @connection.headers['Content-Type'] = 'application/json'
     end
 
     def token= token
@@ -18,13 +26,14 @@ module Nacre
       @connection.headers['brightpearl-auth']
     end
 
-    def content_type= type
-      @connection.headers['Content-Type'] = type
+    def authenticate
+      current_response = @connection.post(@auth_url, @auth_data.to_json, @header_base)
+
+      auth = JSON.parse(current_response.body)
+      @token = Nacre::Token.new(auth['response']) #should use "try"
     end
 
-    def content_type
-      @connection.headers['Content-Type']
-    end
+
   end
 
   class WIPConnection
@@ -49,17 +58,6 @@ module Nacre
 
     private
 
-    def authenticate
-      message = {
-        apiAccountCredentials: {
-          emailAddress: self.config.email,
-          password:     self.config.password
-        }
-      }.to_json
-      @current_response = @connection.connection.post self.auth_url, message, self.config.header
-      @auth = JSON.parse(@current_response.body)
-      @token = @connection.token = Nacre::Token.new(@auth['response'])
-    end
 
   end
 end

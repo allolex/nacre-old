@@ -16,11 +16,11 @@ module Nacre
     end
 
     #def product
-      #@product_service ||= Nacre::API::Product.new(self)
+      #@product_service ||= Nacre::API::ProductService.new(self)
     #end
 
     #def order
-      #@order_service ||= Nacre::API::Order.new(self)
+      #@order_service ||= Nacre::API::OrderService.new(self)
     #end
 
     private
@@ -31,7 +31,7 @@ module Nacre
                 emailAddress: @config.email,
                 password:     @config.password
             }
-        }.to_json
+        }
     end
 
   end
