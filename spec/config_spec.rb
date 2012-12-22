@@ -39,19 +39,33 @@ describe Nacre::Config do
     end
   end
 
+  pending 'no configuration file is provided' do
+  end
+  
+
   context "url generation" do
-      before do
-          @file = 'spec/fixtures/test_config.yml'
-          @cfg = Nacre::Config.new(file: @file)
+      let(:filename) { 'spec/fixtures/test_config.yml' }
+
+      context "without overriding the base url" do
+          before do
+              @cfg = Nacre::Config.new(file: filename)
+          end
+
+          it "constructs the api URL from the config" do
+              @cfg.api_url.should == URI.parse("https://ws-eu1.brightpearl.com/2.0.0/your_brightpearl_id")
+          end
+
+          it "constructs the auth URL from the config" do
+              @cfg.auth_url.should == URI.parse("https://ws-eu1.brightpearl.com/your_brightpearl_id/authorise")
+          end
       end
 
-      it "constructs the api URL from the config" do
-          @cfg.api_url.should == URI.parse("https://ws-eu1.brightpearl.com/2.0.0/your_brightpearl_id")
-      end
-
-      it "constructs the auth URL from the config" do
-          @cfg.auth_url.should == URI.parse("https://ws-eu1.brightpearl.com/your_brightpearl_id/authorise")
+      context "if base url is provided to config" do
+          it "constructs the api URL using the override base url" do
+              cfg = Nacre::Config.new(file: filename, 
+                                      base_url: "http://example.com")
+              cfg.api_url.should == URI.parse("http://example.com/2.0.0/your_brightpearl_id")
+          end
       end
   end
-
 end

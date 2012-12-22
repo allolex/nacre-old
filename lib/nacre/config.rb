@@ -1,7 +1,6 @@
 require 'psych'
 
 module Nacre
-
   class Config
 
     REQUIRED = [:email, :id, :password, :distribution_centre, :api_version, :file]
@@ -10,25 +9,31 @@ module Nacre
       attr_accessor attr
     end
 
-    attr_accessor :header
+    attr_accessor :base_url
 
     def initialize(args)
-      if File.exists? args[:file]
-        self.file = args[:file]
-        load_file args[:file]
-      else
-        raise "File not found"
+      @base_url = args[:base_url]
+
+      filename = args[:file]
+      if !!filename
+          if File.exists?(filename)
+            self.file = filename
+            load_file filename
+          else
+            raise "File not found"
+          end
       end
       load_values args
 
       REQUIRED.each do |field|
         raise "#{field.to_s} required" unless has_been_set? field
       end
-      @header = { 'Content-Type' => 'application/json', 'Accept' => 'json' }
     end
 
     def base_url
-       URI.parse( "https://ws-%s.brightpearl.com" % [self.distribution_centre] )
+        url = "https://ws-%s.brightpearl.com" % [self.distribution_centre] 
+        url = @base_url if @base_url
+        URI.parse(url)
     end
 
     def api_url
