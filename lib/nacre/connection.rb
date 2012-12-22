@@ -10,6 +10,20 @@ module Nacre
       @auth_data = params[:auth_data]
     end
 
+    def authenticate
+      reset_connection
+      response = @connection.post(@auth_url, @auth_data.to_json)
+
+      auth = JSON.parse(response.body)
+      self.token = auth['response']
+    end
+
+    def get(url)
+        @connection.get(url)
+    end
+
+    private
+
     def token= token_string
       @token = token_string
       #Nacre::Token.new(token_string) #should use "try"
@@ -18,14 +32,6 @@ module Nacre
 
     def token
       @token
-    end
-
-    def authenticate
-      reset_connection
-      response = @connection.post(@auth_url, @auth_data.to_json)
-
-      auth = JSON.parse(response.body)
-      self.token = auth['response']
     end
 
     def reset_connection
