@@ -1,9 +1,12 @@
 require 'spec_helper'
 
 describe Nacre do
+    let(:connection) { mock("nacre connection") }
+
     before do
         @config = 'spec/fixtures/test_config.yml'
-        Nacre::Connection.stub(:new)
+        connection.stub(:authenticate)
+        Nacre::Connection.stub(:new).and_return(connection)
     end
 
     describe "initializing" do
@@ -40,7 +43,7 @@ describe Nacre do
 
             Nacre::Connection.should_receive(:new).with(connection_params).and_return(connection)
 
-            #connection.should_receive :connect
+            connection.should_receive :authenticate
 
             bp = Nacre::Api.new( file: @config )
         end

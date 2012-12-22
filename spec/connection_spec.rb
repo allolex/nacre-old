@@ -1,71 +1,78 @@
 require 'spec_helper'
 
 describe Nacre::Connection do
-    context "when valid params are provided" do
-        let(:auth_url) { "auth_url" }
-        let(:api_url) { "api_url" }
-        let(:auth_data) {{
-            "apiAccountCredentials" => {
-                "emailAddress" => 'your_brightpearl_user_email',
-                "password" => 'your_brightpearl_password'
-            }
-        }}
+    let(:auth_url) { "auth_url" }
+    let(:api_url) { "api_url" }
+    let(:auth_data) {{
+        "apiAccountCredentials" => {
+            "emailAddress" => 'your_brightpearl_user_email',
+            "password" => 'your_brightpearl_password'
+        }
+    }}
 
-        let(:valid_params) {{
-            auth_url: auth_url,
-            api_url: api_url,
-            auth_data: auth_data
-        }}
+    let(:valid_params) {{
+        auth_url: auth_url,
+        api_url: api_url,
+        auth_data: auth_data
+    }}
 
-        let(:connection) { Nacre::Connection.new(valid_params) }
+    let(:connection) { Nacre::Connection.new(valid_params) }
 
-        describe "#initialize" do
-            it "should set headers on the Faraday connection" do
-                connection.connection.headers['Content-Type'].should == "application/json"
-            end
+    it "should initialize" do
+        connection.should be_a Nacre::Connection
+    end
 
-            it "should not be authenticated" do
-                connection.connection.headers['brightpearl-auth'].should be_nil
-            end
+    describe "authentication" do
+        context "when brightpearl responds with a valid token" do
+            let(:token_string) { "fe54961f-8adf-4d00-8bd3-185a479e827a" }
+            let(:response_body) { {
+                response: token_string
+            }.to_json }
 
-            #it 'should authenticate to the Nacre web API' do
-            ## fe54961f-8adf-4d00-8bd3-185a479e827a
-            #@bp.token.is_valid?.should be_true
-            #end
-
-            #it 'should insert the token into the config request header' do
-            #@bp.config.header['brightpearl-auth'].should == @bp.token.to_s
-            #end
-        end
-
-        describe "authentication" do
-            it "should send the correct authentication request to brightpearl" do
-                connection.connection.should_receive(:post).with(
-                    auth_url, auth_data.to_json, { 
-                        'Content-Type' => 'application/json', 
-                        'Accept' => 'json' 
-                    })
+            before do
+                connection_mock = mock("connection").as_null_object
+                Faraday.should_receive(:new).and_return(connection_mock)
                     
+                response = mock("response")
+                response.should_receive("body").and_return(response_body)
+
+                connection_mock.should_receive(:post)
+                .with(
+                    auth_url, auth_data.to_json).and_return(response)
+                
                 connection.authenticate
+            end   
+
+            it "should set the token" do
+                connection.token.should == token_string
+                #connection.token.should be_valid
             end
 
-            context "when brightpearl responds with a valid token" do
-                it "should set the token"
-            end
-            
-            context "when brightpearl responds without a valid token" do
-                it "should throw an exception"
+            pending "should set headers on the Faraday connection" do
+                connection.connection.headers['brightpearl-auth'].should == token_string
+                connection.connection.headers['Content-Type'].should == "application/json"
+                connection.connection.headers['Accept'].should == "json"
             end
         end
 
-        context "when invalid params are provided" do
-            it "should not be configured" do
-                connection = Nacre::Connection.new()
-                connection.should_not be_configured
-            end
+        context "when brightpearl responds with an invalid token" do
+            it "should throw an exception"
+        end
+
+        context "when brightpearl responds without a valid token" do
+            it "should throw an exception"
         end
     end
 
+    describe "get" do
+        context "when there is a valid token" do
+            it "sends a get request via Faraday" do
+                #connection.connection.should_receive(:get)
+                #connection.authenticate
+                #connection.get(url, data)
+            end
+        end
+    end
 
     describe "authenticated?" do
     end

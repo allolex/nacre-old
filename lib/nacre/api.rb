@@ -13,6 +13,8 @@ module Nacre
           auth_url: @config.auth_url,
           api_url: @config.api_url
       })
+
+      @connection.authenticate
     end
 
     #def product
