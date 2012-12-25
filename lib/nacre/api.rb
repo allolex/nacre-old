@@ -6,6 +6,8 @@ module Nacre
   class Api
     attr_reader :config, :connection
 
+    @@global_instance = nil
+
     def initialize args
       @config = Nacre::Config.new(args)
       @connection = Nacre::Connection.new({
@@ -15,15 +17,13 @@ module Nacre
       })
 
       @connection.authenticate
+
+      @@global_instance = self # FIXME hack to make the api object a singleton
     end
 
-    #def product
-      #@product_service ||= Nacre::API::ProductService.new(self)
-    #end
-
-    #def order
-      #@order_service ||= Nacre::API::OrderService.new(self)
-    #end
+    def self.global_instance
+        @@global_instance || raise("Nacre API not initialized")
+    end
 
     private
     
