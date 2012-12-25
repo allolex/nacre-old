@@ -12,22 +12,22 @@ module Nacre
 
     def authenticate
       reset_connection
-      response = @connection.post(@auth_url, @auth_data.to_json)
-
+      response = connection.post(@auth_url, @auth_data.to_json)
       auth = JSON.parse(response.body)
       self.token = auth['response']
     end
 
     def get(url)
-        @connection.get(url)
+        connection.inspect
+        connection.get("#{@api_url}/#{url}")
     end
 
     private
 
     def token= token_string
       @token = token_string
-      #Nacre::Token.new(token_string) #should use "try"
-      @connection.headers['brightpearl-auth'] = @token
+      #Nacre::Token.new(token_string) #should use "try" #TODO add token verification
+      connection.headers['brightpearl-auth'] = @token
     end
 
     def token
@@ -35,9 +35,9 @@ module Nacre
     end
 
     def reset_connection
-      @connection = Faraday.new
-      @connection.headers['Content-Type'] = 'application/json'
-      @connection.headers['Accept'] = 'json'
+      self.connection = Faraday.new
+      connection.headers['Content-Type'] = 'application/json'
+      connection.headers['Accept'] = 'json'
     end
   end
 end

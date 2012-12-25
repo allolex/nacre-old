@@ -37,14 +37,14 @@ describe Nacre::Connection do
                 response.should_receive("body").and_return(response_body)
 
                 connection_mock.should_receive(:post)
-                .with(
-                    auth_url, auth_data.to_json).and_return(response)
+                .with(auth_url, auth_data.to_json).
+                  and_return(response)
                 
                 connection.authenticate
             end   
 
             it "should set the token" do
-                connection.token.should == token_string
+                connection.send(:token).should == token_string
                 #connection.token.should be_valid
             end
 
@@ -65,13 +65,19 @@ describe Nacre::Connection do
     end
 
     describe "get" do
-        context "when there is a valid token" do
-            it "sends a get request via Faraday" do
-                #connection.connection.should_receive(:get)
-                #connection.authenticate
-                #connection.get(url, data)
-            end
+      let(:connection) { Nacre::Connection.new(valid_params) }
+
+      context "when there is a valid token" do
+        it "sends a get request via Faraday" do
+          faraday_connection = mock("faraday connection")
+          connection.stub(:connection).and_return(faraday_connection)
+
+          faraday_connection.should_receive(:get).
+            with("api_url/foo/bar")
+
+          connection.get("foo/bar")
         end
+      end
     end
 
     describe "authenticated?" do
