@@ -3,12 +3,12 @@ require 'JSON'
 
 module Nacre
   module API
-    class ProductSearch 
+    class ProductSearch
       def initialize(search_url, query = nil)
         @search_url = search_url
         @query = query
       end
-      
+
       def self.connection
         Nacre::Api.global_instance.connection
       end
@@ -22,7 +22,7 @@ module Nacre
 
         Nacre::API::ProductSearchResults.new_from_json(response.body)
       end
-      
+
     end
   end
 end

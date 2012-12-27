@@ -17,14 +17,14 @@ describe Nacre do
 
         it 'sets its config' do
             bp = Nacre::Api.new( file: @config )
-            
+
             bp.config.file.should == 'spec/fixtures/test_config.yml'
             bp.config.email.should == 'your_brightpearl_user_email'
             bp.config.password.should == 'your_brightpearl_password'
             bp.config.distribution_centre.should == 'eu1'
             bp.config.api_version.should == '2.0.0'
         end
-        
+
         it 'creates and calls connect on a Nacre::Connection' do
             connection = mock("connection")
             auth_data = mock("auth data")
@@ -53,7 +53,7 @@ describe Nacre do
         context "if config is valid" do
             it "generates auth data json from username and password" do
                 bp = Nacre::Api.new( file: @config )
-                
+
                 bp.send(:auth_data).should == {
                     apiAccountCredentials: {
                         emailAddress: 'your_brightpearl_user_email',

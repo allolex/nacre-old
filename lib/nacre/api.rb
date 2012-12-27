@@ -26,7 +26,7 @@ module Nacre
     end
 
     private
-    
+
     def auth_data
         {
             apiAccountCredentials: {
