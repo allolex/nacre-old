@@ -18,14 +18,10 @@ describe Nacre::API::Product do
   end
 
   context "when instantiated with valid data" do
-    let(:param_list) {
-      [ 1000, "Misc item without VAT", "", nil, nil, nil, false,
-              "Brightpearl", "2007-05-29T10:42:08.000+01:00",
-              "2007-09-08T14:42:45.000+01:00", "276", 0 ]
-    }
+    let(:valid_params) {}
 
     let(:model) {
-      Nacre::API::Product.new(param_list)
+      Nacre::API::Product.new(valid_params)
     }
 
     describe "initialization" do
@@ -34,12 +30,14 @@ describe Nacre::API::Product do
       end
 
       it 'should have a list of fields' do
-        model.fields.should == [ :product_id, :product_name, :sku, :ean, :upc, :isbn,
-          :stock_tracked, :sales_channel, :created, :updated,
-          :bp_category, :product_group ]
+        model.class.fields.should == [
+          :id, :brandId, :productTypeId, :identity,
+          :productGroupId, :stock, :financialDetails,
+          :salesChannels, :composition, :variations
+        ]
       end
 
-      it 'should contain the correct model data' do
+      pending 'should contain the correct model data' do
         model.product_id.should == 1000
         model.sales_channel.should == 'Brightpearl'
         model.sku.should == ''
@@ -47,36 +45,78 @@ describe Nacre::API::Product do
       end
     end
 
-    describe "all" do
-      let(:list_json) { { "response" => results }.to_json }
-
+    describe "find" do
       before do
         response = mock("response")
-        response.stub(:body).and_return(list_json)
+        response.stub(:body).and_return(response_json)
         connection.should_receive(:get).
-          with("/product-service/product-search").
+          with("/product-service/product/1008").
           any_number_of_times.
           and_return(response)
       end
 
       context "when an empty list comes back" do
-        let(:results) { [] }
-        
-        it 'should return an empty array' do
-          Nacre::API::Product.all.should be_a(Array)
-          Nacre::API::Product.all.should be_empty
+        let(:response_json) { { "response" => [] }.to_json }
+
+        it 'should return nil' do
+          Nacre::API::Product.find(1008).should be_nil
         end
       end
 
-      pending "when a list with actual values comes back" do
+      context "when one valid value comes back" do
         let(:results) { [] }
-
-        it 'should return an array of Products' do
-          Nacre::API::Product.all.should be_a(Array)
-          Nacre::API::Product.all.length.should == 2
-          Nacre::API::Product.all.first.should be_a(Nacre::API::Product)
+        let(:response_json) { IO.read("spec/fixtures/json/product.json") }
+          
+        it 'should return a valid Product' do
+          product = Nacre::API::Product.find(1008)
+          product.should be_a(Nacre::API::Product)
+          product.id.should == 1008
+          product.identity["sku"].should == "SKU0001"
+          #product.productTypeId.should == 1  #TODO uncamelize this
         end
       end
     end
+
+    describe "all" do
+      context "when an empty list comes back" do
+        it 'should return an empty array' do
+          Nacre::API::ProductSearch.any_instance.should_receive(:results).and_return(Nacre::API::ProductSearchResults.new)
+          all_products = Nacre::API::Product.all
+          all_products.should be_a(Array)
+          all_products.should be_empty
+        end
+      end
+
+      context "when a list with actual values comes back" do
+        let(:response_json) { IO.read("spec/fixtures/json/product.json") }
+
+        it 'should return an array of Products' do
+          search_results = Nacre::API::ProductSearchResults.new_from_json(
+              IO.read("spec/fixtures/json/product_search_result.json")
+          )
+          Nacre::API::ProductSearch.any_instance.should_receive(:results).and_return(search_results)
+
+          response = mock("response")
+          response.stub(:body).and_return(response_json)
+          connection.should_receive(:get).
+            with("/product-service/product/1000,1001,1002,1003,1004,1005,1006").
+            and_return(response)
+
+          products = Nacre::API::Product.all
+          products.should be_a(Array)
+          products.length.should == 1
+          
+          product = products.first
+          product.should be_a(Nacre::API::Product)
+          product.id.should == 1008
+          product.identity["sku"].should == "SKU0001"
+          #product.productTypeId.should == 1  #TODO uncamelize this
+        end
+      end
+    end
+
+    describe "save"
+
+    describe "delete"
   end
 end

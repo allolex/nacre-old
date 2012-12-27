@@ -1,6 +1,8 @@
 require 'nacre'
 require 'JSON'
 
+# TODO require ActiveSupport to camelize/underscore field names
+
 module Nacre
   module API
     class ProductServiceResource # Abstract Class
@@ -8,27 +10,18 @@ module Nacre
           Nacre::Api.global_instance.connection
       end
 
+      def self.find(id)
+        find_many([id]).first
+      end
+
       def self.all
           search
       end
 
-      def self.search(params = nil)
-        results = []
-        response = nil
-
-        begin
-          response = self.connection.get("#{search_url}#{params}")
-        rescue
-          raise "Error in response: #{response.body.inspect}\n#{api.inspect}"
-        end
-
-        hash = JSON.parse(response.body)
-        hash['response'].each do |result|
-          model = self.new(result)
-          results << model
-        end
-        
-        results
+      def self.search(query = nil)
+        search = Nacre::API::ProductSearch.new(search_url, query)
+        search_results = search.results
+        find_many(search_results.id_set)
       end
 
     private
@@ -45,9 +38,37 @@ module Nacre
         raise NotImplementedError.new("Child class must implement #{method_name}")
       end
 
+      #def self.search_results_class
+        #raise NotImplementedError.new("Child class must implement #{method_name}")
+      #end
+
+      def self.find_many(id_set)
+        results = []
+        return [] if id_set.empty?
+
+        id_set_string = id_set.join(",")
+        begin
+          response = self.connection.get("#{url}/#{id_set_string}")
+        rescue
+          raise "Error in response: #{response.try(:body).try(:inspect)}\n#{connection.inspect}"
+        end
+
+        hash = JSON.parse(response.body)
+        hash['response'].each do |result|
+          model = self.new(result)
+          results << model
+        end
+        
+        results
+      end
+
+      # TODO
+      # consider using recursive-open-struct
+      # https://github.com/aetherknight/recursive-open-struct
+      # to turn json data into structs with proper array handling
       def load_values(values)
-        self.fields.each_with_index do |field, index|
-          self.public_send "#{field.to_s}=", values[index]
+        self.class.fields.each do |field|
+          self.public_send "#{field.to_s}=", values[field.to_s]
         end
       end
     end
