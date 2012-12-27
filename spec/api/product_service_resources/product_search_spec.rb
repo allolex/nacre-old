@@ -26,7 +26,7 @@ describe Nacre::API::ProductSearch do
         Nacre::API::ProductSearchResults.should_receive(:new_from_json).
           with(response_json).
           and_return(returned_results)
-        
+
         results = Nacre::API::ProductSearch.new(search_url).results
         results.should == returned_results
       end

@@ -17,7 +17,6 @@ module Nacre
         end
       end
 
-
       SEARCH_FIELDS = [ :product_id, :product_name, :sku, :ean, :upc, :isbn,
         :stock_tracked, :sales_channel, :created, :updated,
         :bp_category, :product_group ]
@@ -45,11 +44,11 @@ module Nacre
 
         self.new(metadata, items)
       end
-      
+
       def length
         @items.length
       end
-  
+
       def empty?
         @items.empty?
       end
