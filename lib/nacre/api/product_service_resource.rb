@@ -1,7 +1,6 @@
 require 'nacre'
 require 'JSON'
-
-# TODO require ActiveSupport to camelize/underscore field names
+require 'active_support/inflector'
 
 module Nacre
 
@@ -65,13 +64,9 @@ module Nacre
         results
       end
 
-      # TODO
-      # consider using recursive-open-struct
-      # https://github.com/aetherknight/recursive-open-struct
-      # to turn json data into structs with proper array handling
       def load_values(values)
         self.class.fields.each do |field|
-          self.public_send "#{field.to_s}=", values[field.to_s]
+          self.public_send "#{field.to_s.underscore}=", values[field.to_s].to_openstruct
         end
       end
     end
