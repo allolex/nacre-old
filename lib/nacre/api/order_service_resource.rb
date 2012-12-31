@@ -51,7 +51,6 @@ module Nacre
         end
 
         hash = JSON.parse(response.body)
-        puts response.body.inspect
         hash['response'].each do |result|
           model = self.new(result)
           results << model

@@ -18,7 +18,6 @@ module Nacre
       def results
         begin
           uri = "#{@search_url}#{@query}?#{@params}"
-          puts "Order search URI: #{uri}"
           response = self.class.connection.get(uri)
         rescue
           raise "Error in response: #{response.try(:body).try(:inspect)}\n#{connection.inspect}"
