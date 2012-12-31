@@ -61,7 +61,7 @@ module Nacre
 
       def load_values(values)
         self.class.fields.each do |field|
-          self.public_send "#{field.to_s}=", values[field.to_s]
+          self.public_send "#{field.underscore.to_s}=", values[field.to_s].to_openstruct
         end
       end
 
