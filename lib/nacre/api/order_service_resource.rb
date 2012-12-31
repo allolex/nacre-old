@@ -1,5 +1,6 @@
 require 'nacre'
 require 'JSON'
+require 'active_support/inflector'
 
 module Nacre
 
@@ -61,7 +62,7 @@ module Nacre
 
       def load_values(values)
         self.class.fields.each do |field|
-          self.public_send "#{field.underscore.to_s}=", values[field.to_s].to_openstruct
+          self.public_send "#{field.to_s.underscore}=", values[field.to_s].to_openstruct
         end
       end
 
