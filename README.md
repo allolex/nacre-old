@@ -56,3 +56,9 @@ These are functional, but definitely need some work:
 3. Commit your changes (`git commit -am 'Added some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+## Thanks 
+
+Many thanks go to Angela Heenan at and Helen Bowling at Brightpearl.
+
+Alex Stupakov, you're an absolute ace for helping to unstick this project.
