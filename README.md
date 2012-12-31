@@ -27,12 +27,25 @@ Make sure you copy the sample config file to `test_config.yml` with your credent
 - Configuration support. See config/ for a sample YAML file.
 - API authentication
 
+These are functional, but definitely need some work:
+
+- Product
+- Order
+
+## Synopsis
+
+    require 'nacre'
+
+    api = Nacre::Api.new( file: 'config/test_southern.yml' )
+
+    products_list = Nacre::API::Product.all
+
+    product = Nacre::API::Product.find(1000)
+
 ## Todo
 
 - Services
-  - Product
   - Accounting
-  - Order
   - Contact
   - Warehouse
 
