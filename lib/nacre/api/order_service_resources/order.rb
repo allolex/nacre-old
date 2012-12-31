@@ -7,9 +7,32 @@ module Nacre
 
     class Order < OrderServiceResource
 
+#      FIELDS = [
+#        :orderId, :orderTypeId, :contactId, :orderStatusId,
+#        :orderStockStatusId, :createdOn, :createdById
+#      ]
+
       FIELDS = [
-        :orderId, :orderTypeId, :contactId, :orderStatusId,
-        :orderStockStatusId, :createdOn, :createdById
+        :id,
+        :parentOrderId,
+        :orderTypeCode,
+        :reference,
+        :acknowledged,
+        :orderStatus,
+        :stockStatusCode,
+        :allocationStatusCode,
+        :placedOn,
+        :createdOn,
+        :createdById,
+        :priceListId,
+        :priceModeCode,
+        :delivery,
+        :invoices,
+        :currency,
+        :totalValue,
+        :assignment,
+        :parties,
+        :orderRows
       ]
 
       def self.fields
