@@ -1,6 +1,6 @@
 # Allows easy conversion of hashes into openstructs
 
-require "ostruct"
+require 'ostruct'
 require 'active_support/inflector'
 
 class Object
