@@ -3,9 +3,13 @@ require 'JSON'
 require 'ostruct'
 
 module Nacre
+
   module API
+
     class OrderSearchResults
+
       class OrderSearchResultItemBuilder
+
         def build_result_item(data, columns)
           result_item = OpenStruct.new
           columns.each_with_index do |column, index|

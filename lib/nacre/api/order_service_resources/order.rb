@@ -2,8 +2,11 @@ require 'nacre'
 require 'JSON'
 
 module Nacre
+
   module API
+
     class Order < OrderServiceResource
+
       FIELDS = [
         :orderId, :orderTypeId, :contactId, :orderStatusId,
         :orderStockStatusId, :createdOn, :createdById

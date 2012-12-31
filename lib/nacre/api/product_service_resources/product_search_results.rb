@@ -3,9 +3,13 @@ require 'JSON'
 require 'ostruct'
 
 module Nacre
+
   module API
+
     class ProductSearchResults
+
       class ProductSearchResultItemBuilder
+
         def build_result_item(data, columns)
           result_item = OpenStruct.new
           columns.each_with_index do |column, index|
@@ -15,6 +19,7 @@ module Nacre
 
           result_item
         end
+
       end
 
       SEARCH_FIELDS = [ :product_id, :product_name, :sku, :ean, :upc, :isbn,

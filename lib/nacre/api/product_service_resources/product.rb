@@ -2,8 +2,11 @@ require 'nacre'
 require 'JSON'
 
 module Nacre
+
   module API
+
     class Product < ProductServiceResource
+
       FIELDS = [
         :id, :brandId, :productTypeId, :identity,
         :productGroupId, :stock, :financialDetails,
