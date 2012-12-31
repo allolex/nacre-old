@@ -1,4 +1,5 @@
 require 'nacre/version'
+require 'nacre/openstructable'
 require 'nacre/api'
 require 'nacre/api/service'
 require 'nacre/api/product_service_resource'
