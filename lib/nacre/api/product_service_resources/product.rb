@@ -1,5 +1,6 @@
 require 'nacre'
 require 'JSON'
+require 'active_support/inflector'
 
 module Nacre
 
@@ -18,7 +19,7 @@ module Nacre
       end
 
       fields.each do |attr|
-        attr_accessor attr
+        attr_accessor attr.to_s.underscore.to_sym
       end
 
       def initialize(values = nil)
