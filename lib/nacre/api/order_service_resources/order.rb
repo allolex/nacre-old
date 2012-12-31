@@ -7,11 +7,6 @@ module Nacre
 
     class Order < OrderServiceResource
 
-#      FIELDS = [
-#        :orderId, :orderTypeId, :contactId, :orderStatusId,
-#        :orderStockStatusId, :createdOn, :createdById
-#      ]
-
       FIELDS = [
         :id,
         :parentOrderId,
