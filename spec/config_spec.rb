@@ -41,7 +41,7 @@ describe Nacre::Config do
 
   pending 'no configuration file is provided' do
   end
-  
+
 
   context "url generation" do
       let(:filename) { 'spec/fixtures/test_config.yml' }
@@ -62,7 +62,7 @@ describe Nacre::Config do
 
       context "if base url is provided to config" do
           it "constructs the api URL using the override base url" do
-              cfg = Nacre::Config.new(file: filename, 
+              cfg = Nacre::Config.new(file: filename,
                                       base_url: "http://example.com")
               cfg.api_url.should == URI.parse("http://example.com/2.0.0/your_brightpearl_id")
           end

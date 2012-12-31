@@ -7,7 +7,7 @@ module Nacre
     class OrderSearch
       def initialize(search_url, query = nil, max_results = 200, starting_page = 1)
         @search_url = search_url
-        @query = query 
+        @query = query
         @params = build_params( max_results: max_results, starting_page: starting_page )
       end
 

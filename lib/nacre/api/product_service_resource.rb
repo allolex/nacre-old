@@ -4,8 +4,11 @@ require 'JSON'
 # TODO require ActiveSupport to camelize/underscore field names
 
 module Nacre
+
   module API
+
     class ProductServiceResource # Abstract Class
+
       def self.connection
           Nacre::Api.global_instance.connection
       end
@@ -24,7 +27,7 @@ module Nacre
         find_many(search_results.id_set)
       end
 
-    private
+      private
 
       def self.service_url
         "/product-service"
@@ -58,7 +61,7 @@ module Nacre
           model = self.new(result)
           results << model
         end
-        
+
         results
       end
 

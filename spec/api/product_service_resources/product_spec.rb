@@ -66,7 +66,7 @@ describe Nacre::API::Product do
       context "when one valid value comes back" do
         let(:results) { [] }
         let(:response_json) { IO.read("spec/fixtures/json/product.json") }
-          
+
         it 'should return a valid Product' do
           product = Nacre::API::Product.find(1008)
           product.should be_a(Nacre::API::Product)
@@ -105,7 +105,7 @@ describe Nacre::API::Product do
           products = Nacre::API::Product.all
           products.should be_a(Array)
           products.length.should == 1
-          
+
           product = products.first
           product.should be_a(Nacre::API::Product)
           product.id.should == 1008

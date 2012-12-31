@@ -31,7 +31,7 @@ module Nacre
     end
 
     def base_url
-        url = "https://ws-%s.brightpearl.com" % [self.distribution_centre] 
+        url = "https://ws-%s.brightpearl.com" % [self.distribution_centre]
         url = @base_url if @base_url
         URI.parse(url)
     end

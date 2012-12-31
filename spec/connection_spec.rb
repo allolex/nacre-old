@@ -32,16 +32,16 @@ describe Nacre::Connection do
             before do
                 connection_mock = mock("connection").as_null_object
                 Faraday.should_receive(:new).and_return(connection_mock)
-                    
+
                 response = mock("response")
                 response.should_receive("body").and_return(response_body)
 
                 connection_mock.should_receive(:post)
                 .with(auth_url, auth_data.to_json).
                   and_return(response)
-                
+
                 connection.authenticate
-            end   
+            end
 
             it "should set the token" do
                 connection.send(:token).should == token_string
