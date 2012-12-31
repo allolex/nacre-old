@@ -36,7 +36,7 @@ These are functional, but definitely need some work:
 
     require 'nacre'
 
-    api = Nacre::Api.new( file: 'config/test_southern.yml' )
+    api = Nacre::Api.new( file: 'config/test_config.yml' )
 
     products_list = Nacre::API::Product.all
 
