@@ -17,7 +17,7 @@ module Nacre
 
       def results
         begin
-          uri = "#{@search_url}#{@query}?#{@params}"
+          uri = build_uri @search_url, @query, @params
           response = self.class.connection.get(uri)
         rescue
           raise "Error in response: #{response.try(:body).try(:inspect)}\n#{connection.inspect}"
@@ -27,6 +27,11 @@ module Nacre
       end
 
       private
+
+      def build_uri search_url, query, params
+        formatted_query = query.nil? ? '' : URI.escape(query + '&')
+        "#{search_url}?#{formatted_query}#{params}"
+      end
 
       def build_params args
         list = []
