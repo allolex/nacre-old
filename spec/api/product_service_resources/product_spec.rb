@@ -31,9 +31,9 @@ describe Nacre::API::Product do
 
       it 'should have a list of fields' do
         model.class.fields.should == [
-          :id, :brandId, :productTypeId, :identity,
-          :productGroupId, :stock, :financialDetails,
-          :salesChannels, :composition, :variations
+          :id, :brand_id, :product_type_id, :identity,
+          :product_group_id, :stock, :financial_details,
+          :sales_channels, :composition, :variations
         ]
       end
 
@@ -72,7 +72,12 @@ describe Nacre::API::Product do
           product.should be_a(Nacre::API::Product)
           product.id.should == 1008
           product.identity.sku.should == "SKU0001"
+        end
+
+        it 'should convert camel case fields to snake case methods' do
+          product = Nacre::API::Product.find(1008)
           product.product_type_id.should == 1
+          product.financial_details.tax_code.id.should == 7
         end
       end
     end
