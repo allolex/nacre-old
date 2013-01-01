@@ -24,32 +24,27 @@ describe Nacre::API::OrderSearchResults do
 
       it 'results items should be an array of OpenStructs' do
         results.should be_a(Nacre::API::OrderSearchResults)
-        results.length.should == 7
+        results.length.should == 3
 
-        results.items.first.orderId.should == 1000
-        results.items.first.orderName.should == "Misc item without VAT"
-        results.items.first.SKU.should == ""
-        results.items.first.EAN.should be_nil
-        results.items.first.UPC.should be_nil
-        results.items.first.ISBN.should be_nil
-        results.items.first.stockTracked.should == false
-        results.items.first.salesChannelName.should == "Brightpearl"
-        results.items.first.createdOn.should == "2007-05-29T10:42:08.000Z"
-        results.items.first.updatedOn.should ==  "2007-09-08T14:42:45.000Z"
-        results.items.first.brightpearlCategoryCode.should == 1000
-        results.items.first.orderGroupId.should == 0
+        results.items.first.orderId.should == 123456
+        results.items.first.orderTypeId.should == 1 
+        results.items.first.contactId.should == 253
+        results.items.first.orderStatusId.should == 4
+        results.items.first.orderStockStatusId.should == 3
+        results.items.first.createdOn.should == '2012-12-13T13:00:42.000Z'
+        results.items.first.createdById == '280'
       end
 
       it "should have the correct metadata" do
-        results.metadata.columns.length.should == 12
+        results.metadata.columns.length.should == 7
         results.metadata.firstResult.should == 1
-        results.metadata.lastResult.should == 7
-        results.metadata.resultsAvailable.should == 7
-        results.metadata.resultsReturned.should == 7
+        results.metadata.lastResult.should == 3
+        results.metadata.resultsAvailable.should == 3
+        results.metadata.resultsReturned.should == 3
       end
 
       it "should return the id set of the search results" do
-        results.id_set.should =~ Array(1000..1006)
+        results.id_set.should =~ [123456,123457,123458]
       end
     end
   end

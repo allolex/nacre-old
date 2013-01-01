@@ -52,7 +52,7 @@ describe Nacre::API::Order do
         response = mock("response")
         response.stub(:body).and_return(response_json)
         connection.should_receive(:get).
-          with("/order-service/order/1").
+          with("/order-service/order/123456").
           any_number_of_times.
           and_return(response)
       end
@@ -61,7 +61,7 @@ describe Nacre::API::Order do
         let(:response_json) { { "response" => [] }.to_json }
 
         it 'should return nil' do
-          Nacre::API::Order.find(1008).should be_nil
+          Nacre::API::Order.find(123456).should be_nil
         end
       end
 
@@ -70,11 +70,11 @@ describe Nacre::API::Order do
         let(:response_json) { IO.read("spec/fixtures/json/order.json") }
 
         it 'should return a valid Order' do
-          order = Nacre::API::Order.find(1008)
+          order = Nacre::API::Order.find(123456)
           order.should be_a(Nacre::API::Order)
-          order.id.should == 1008
-          order.identity["sku"].should == "SKU0001"
-          #order.orderTypeId.should == 1  #TODO uncamelize this
+          order.id.should == 123456
+          order.reference.should == 'order#001'
+          order.currency.accounting_currency_code.should == 'GBP'
         end
       end
     end
@@ -101,7 +101,7 @@ describe Nacre::API::Order do
           response = mock("response")
           response.stub(:body).and_return(response_json)
           connection.should_receive(:get).
-            with("/order-service/order/1000,1001,1002,1003,1004,1005,1006").
+            with("/order-service/order/123456,123457,123458").
             and_return(response)
 
           orders = Nacre::API::Order.all
@@ -110,9 +110,9 @@ describe Nacre::API::Order do
 
           order = orders.first
           order.should be_a(Nacre::API::Order)
-          order.id.should == 1008
-          order.identity["sku"].should == "SKU0001"
-          #order.orderTypeId.should == 1  #TODO uncamelize this
+          order.id.should == 123456
+          order.reference.should == 'order#001'
+          order.currency.accounting_currency_code.should == 'GBP'
         end
       end
     end

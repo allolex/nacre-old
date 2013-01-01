@@ -32,7 +32,7 @@ module Nacre
       ]
 
       def self.fields
-        FIELDS
+        FIELDS.map(&:to_s).map(&:underscore).map(&:to_sym)
       end
 
       fields.each do |attr|

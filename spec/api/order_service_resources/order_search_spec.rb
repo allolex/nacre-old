@@ -13,7 +13,7 @@ describe Nacre::API::OrderSearch do
       response = mock("response")
       response.stub(:body).and_return(response_json)
       connection.should_receive(:get).
-        with(search_url).
+        with(search_url + '?pageSize=200&firstResult=1').
         any_number_of_times.
         and_return(response)
     end
