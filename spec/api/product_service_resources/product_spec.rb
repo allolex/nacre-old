@@ -71,8 +71,8 @@ describe Nacre::API::Product do
           product = Nacre::API::Product.find(1008)
           product.should be_a(Nacre::API::Product)
           product.id.should == 1008
-          product.identity["sku"].should == "SKU0001"
-          #product.productTypeId.should == 1  #TODO uncamelize this
+          product.identity.sku.should == "SKU0001"
+          product.product_type_id.should == 1
         end
       end
     end
@@ -109,8 +109,8 @@ describe Nacre::API::Product do
           product = products.first
           product.should be_a(Nacre::API::Product)
           product.id.should == 1008
-          product.identity["sku"].should == "SKU0001"
-          #product.productTypeId.should == 1  #TODO uncamelize this
+          product.identity.sku.should == "SKU0001"
+          product.product_type_id.should == 1
         end
       end
     end
