@@ -1,7 +1,6 @@
 # Nacre
 
-Nacre is a Ruby wrapper around the Brightpearl accounting software service. It
-uses the Brightpearl API.
+Nacre is a Ruby wrapper around the Brightpearl accounting software service. It uses the Brightpearl API.
 
 http://www.brightpearl.com/developer/latest/
 
@@ -17,8 +16,12 @@ And then execute:
 
 ## Usage
 
-This gem isn't really very functional as of yet, so for now you can look
-at the tests to see how it's used.
+```ruby
+require 'nacre'
+api = Nacre::Api.new( file: 'config/test_config.yml' )
+products_list = Nacre::API::Product.all
+product = Nacre::API::Product.find(1000)
+```
 
 Make sure you copy the sample config file to `test_config.yml` with your credentials.
 
@@ -32,15 +35,6 @@ These are functional, but definitely need some work:
 - Product
 - Order
 
-## Synopsis
-
-    require 'nacre'
-
-    api = Nacre::Api.new( file: 'config/test_config.yml' )
-
-    products_list = Nacre::API::Product.all
-
-    product = Nacre::API::Product.find(1000)
 
 ## Todo
 
