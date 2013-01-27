@@ -26,21 +26,21 @@ describe Nacre::API::OrderSearchResults do
         results.should be_a(Nacre::API::OrderSearchResults)
         results.length.should == 3
 
-        results.items.first.orderId.should == 123456
-        results.items.first.orderTypeId.should == 1 
-        results.items.first.contactId.should == 253
-        results.items.first.orderStatusId.should == 4
+        results.items.first.orderId.should            == 123456
+        results.items.first.orderTypeId.should        == 1
+        results.items.first.contactId.should          == 253
+        results.items.first.orderStatusId.should      == 4
         results.items.first.orderStockStatusId.should == 3
-        results.items.first.createdOn.should == '2012-12-13T13:00:42.000Z'
-        results.items.first.createdById == '280'
+        results.items.first.createdOn.should          == '2012-12-13T13:00:42.000Z'
+        results.items.first.createdById               == '280'
       end
 
       it "should have the correct metadata" do
-        results.metadata.columns.length.should == 7
-        results.metadata.firstResult.should == 1
-        results.metadata.lastResult.should == 3
+        results.metadata.columns.length.should   == 7
+        results.metadata.firstResult.should      == 1
+        results.metadata.lastResult.should       == 3
         results.metadata.resultsAvailable.should == 3
-        results.metadata.resultsReturned.should == 3
+        results.metadata.resultsReturned.should  == 3
       end
 
       it "should return the id set of the search results" do
