@@ -8,11 +8,15 @@ http://www.brightpearl.com/developer/latest/
 
 Add this line to your application's Gemfile:
 
-    gem "nacre", :git => "git://github.com/allolex/nacre.git"
+```ruby
+gem "nacre", :git => "git://github.com/allolex/nacre.git"
+```
 
 And then execute:
 
-    $ bundle
+```
+$ bundle
+```
 
 ## Usage
 
