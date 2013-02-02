@@ -20,6 +20,7 @@ describe Nacre::Connection do
 
     it "should initialize" do
         connection.should be_a Nacre::Connection
+        connection.connection.headers['Accept'].should == "application/json"
     end
 
     describe "authentication" do
