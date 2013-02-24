@@ -44,6 +44,10 @@ module Nacre
         rescue
           raise "Error in response: #{response.try(:body).try(:inspect)}\n#{connection.inspect}"
         end
+        puts '================================'
+        ap response
+        puts '================================'
+        puts '================================'
 
         hash = JSON.parse(response.body)
         hash['response'].each do |result|

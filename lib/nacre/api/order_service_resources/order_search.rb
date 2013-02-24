@@ -23,6 +23,8 @@ module Nacre
           raise "Error in response: #{response.try(:body).try(:inspect)}\n#{connection.inspect}"
         end
 
+        ap results
+
         Nacre::API::OrderSearchResults.new_from_json(response.body)
       end
 

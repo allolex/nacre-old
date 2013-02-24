@@ -15,6 +15,8 @@ require 'nacre/config'
 require 'nacre/connection'
 require 'nacre/token'
 
+require 'awesome_print'
+
 module Nacre
 
 end

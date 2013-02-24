@@ -8,10 +8,11 @@ module Nacre
 
     class ProductServiceResource < Nacre::API::ServiceResource
 
-      def self.search(query = nil)
-        search = Nacre::API::ProductSearch.new(search_url, query)
+      def self.search(query = nil, args)
+        args[:starting_page] = 2
+        search = Nacre::API::ProductSearch.new(search_url, query, args)
         search_results = search.results
-        find_many(search_results.id_set)
+        results = find_many(search_results.id_set)
       end
 
       private

@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Nacre::API::OrderSearchResults do
+
   context "when initialized with no data" do
     it "should be empty" do
       Nacre::API::OrderSearchResults.new.should be_empty
@@ -48,4 +49,5 @@ describe Nacre::API::OrderSearchResults do
       end
     end
   end
+
 end
