@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Nacre do
-    let(:connection) { mock("nacre connection") }
+    let(:connection) { double("nacre connection") }
 
     before do
         @config = 'spec/fixtures/test_config.yml'
@@ -26,10 +26,10 @@ describe Nacre do
         end
 
         it 'creates and calls connect on a Nacre::Connection' do
-            connection = mock("connection")
-            auth_data = mock("auth data")
-            auth_url = mock("auth url")
-            api_url = mock("api url")
+            connection = double("connection")
+            auth_data = double("auth data")
+            auth_url = double("auth url")
+            api_url = double("api url")
 
             Nacre::Api.any_instance.should_receive(:auth_data).and_return auth_data
             Nacre::Config.any_instance.should_receive(:auth_url).and_return auth_url

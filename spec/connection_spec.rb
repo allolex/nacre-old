@@ -30,10 +30,10 @@ describe Nacre::Connection do
       }.to_json }
 
       before do
-        connection_mock = mock("connection").as_null_object
+        connection_mock = double("connection").as_null_object
         Faraday.should_receive(:new).and_return(connection_mock)
 
-        response = mock("response")
+        response = double("response")
         response.should_receive("body").and_return(response_body)
 
         connection_mock.should_receive(:post).
@@ -70,7 +70,7 @@ describe Nacre::Connection do
     context "when there is a valid token" do
 
       it "sends a get request via Faraday" do
-        faraday_connection = mock("faraday connection")
+        faraday_connection = double("faraday connection")
         connection.stub(:connection).and_return(faraday_connection)
 
         faraday_connection.should_receive(:get).

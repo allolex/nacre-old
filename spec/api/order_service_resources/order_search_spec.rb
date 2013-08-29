@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Nacre::API::OrderSearch do
-  let(:connection) { mock("connection") }
+  let(:connection) { double("connection") }
   let(:search_url) { 'order-service/order-search' }
 
   before do
@@ -10,17 +10,17 @@ describe Nacre::API::OrderSearch do
 
   context "when no search query is provided" do
     before do
-      response = mock("response")
+      response = double("response")
       response.stub(:body).and_return(response_json)
-      connection.should_receive(:get).
-        with(search_url + '?pageSize=200&firstResult=1').
-        any_number_of_times.
+      connection.stub(:get).
         and_return(response)
+      connection.should_receive(:get).
+        with(search_url + '?pageSize=200&firstResult=1')
     end
 
     describe "#results" do
       let(:response_json) { "{ foo : 'bar' }" }
-      let(:returned_results) { mock("a result") }
+      let(:returned_results) { double("a result") }
 
       it "should return a search results object" do
         Nacre::API::OrderSearchResults.should_receive(:new_from_json).
