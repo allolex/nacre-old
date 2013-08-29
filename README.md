@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/allolex/nacre.png?branch=master)](https://travis-ci.org/allolex/nacre)
+
 # Nacre
 
 Nacre is a Ruby gem that wraps the API of the Brightpearl accounting software service.
