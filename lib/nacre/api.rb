@@ -1,6 +1,6 @@
 require 'nacre'
 require 'faraday'
-require 'JSON'
+require 'json'
 
 module Nacre
   class Api
