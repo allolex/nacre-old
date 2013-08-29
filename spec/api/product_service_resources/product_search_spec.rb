@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Nacre::API::ProductSearch do
-  let(:connection) { mock("connection") }
+  let(:connection) { double("connection") }
   let(:search_url) { 'product-service/product-search' }
 
   before do
@@ -10,17 +10,15 @@ describe Nacre::API::ProductSearch do
 
   context "when no search query is provided" do
     before do
-      response = mock("response")
+      response = double("response")
       response.stub(:body).and_return(response_json)
-      connection.should_receive(:get).
-        with(search_url).
-        any_number_of_times.
+      connection.stub(:get).
         and_return(response)
     end
 
     describe "#results" do
       let(:response_json) { "{ foo : 'bar' }" }
-      let(:returned_results) { mock("a result") }
+      let(:returned_results) { double("a result") }
 
       it "should return a search results object" do
         Nacre::API::ProductSearchResults.should_receive(:new_from_json).
