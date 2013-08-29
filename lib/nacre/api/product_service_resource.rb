@@ -1,5 +1,5 @@
 require 'nacre'
-require 'JSON'
+require 'json'
 require 'active_support/inflector'
 
 module Nacre
