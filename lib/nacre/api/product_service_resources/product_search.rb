@@ -1,5 +1,5 @@
 require 'nacre'
-require 'JSON'
+require 'json'
 
 module Nacre
   module API
