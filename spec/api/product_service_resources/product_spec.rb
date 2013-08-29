@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Nacre::API::Product do
-  let(:connection) { mock("connection") }
+  let(:connection) { double("connection") }
 
   before do
     Nacre::API::Product.stub(:connection).and_return(connection)
@@ -47,12 +47,12 @@ describe Nacre::API::Product do
 
     describe "find" do
       before do
-        response = mock("response")
+        response = double("response")
         response.stub(:body).and_return(response_json)
-        connection.should_receive(:get).
-          with("/product-service/product/1008").
-          any_number_of_times.
+        connection.stub(:get).
           and_return(response)
+        connection.should_receive(:get).
+          with("/product-service/product/1008")
       end
 
       context "when an empty list comes back" do
@@ -101,7 +101,7 @@ describe Nacre::API::Product do
           )
           Nacre::API::ProductSearch.any_instance.should_receive(:results).and_return(search_results)
 
-          response = mock("response")
+          response = double("response")
           response.stub(:body).and_return(response_json)
           connection.should_receive(:get).
             with("/product-service/product/1000,1001,1002,1003,1004,1005,1006").
