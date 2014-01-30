@@ -2,7 +2,9 @@ language: ruby
 script:
   - bundle exec rspec
 rvm:
-  - 2.0.0
+  - 1.9.3
+  - 2.1.0
+  - jruby-19mode
 branches:
   only:
     - master
