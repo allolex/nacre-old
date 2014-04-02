@@ -5,6 +5,7 @@ require 'nacre/api/service'
 require 'nacre/api/service_resource'
 require 'nacre/api/product_service_resource'
 require 'nacre/api/product_service_resources/product'
+require 'nacre/api/product_service_resources/price'
 require 'nacre/api/product_service_resources/product_search'
 require 'nacre/api/product_service_resources/product_search_results'
 require 'nacre/api/order_service_resource'
@@ -16,5 +17,4 @@ require 'nacre/connection'
 require 'nacre/token'
 
 module Nacre
-
 end
