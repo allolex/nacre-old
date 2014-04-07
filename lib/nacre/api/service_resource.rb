@@ -3,11 +3,8 @@ require 'json'
 require 'active_support/inflector'
 
 module Nacre
-
   module API
-
     class ServiceResource
-
       def self.connection
           Nacre::Api.global_instance.connection
       end
@@ -59,9 +56,6 @@ module Nacre
           self.public_send "#{field.to_s}=", values[field.to_s.camelize(:lower)].to_openstruct
         end
       end
-
     end
-
   end
-
 end
