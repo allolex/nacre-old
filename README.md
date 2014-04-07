@@ -1,5 +1,10 @@
 [![Build Status](https://travis-ci.org/allolex/nacre.png?branch=master)](https://travis-ci.org/allolex/nacre) [![Code Climate](https://codeclimate.com/github/allolex/nacre.png)](https://codeclimate.com/github/allolex/nacre) [![Coverage Status](https://coveralls.io/repos/allolex/nacre/badge.png?branch=master)](https://coveralls.io/r/allolex/nacre?branch=master)
 
+THIS LIBRARY HAS BEEN / IS BEING REPLACED BY https://github.com/allolex/nacre 
+
+If you'd like to contribute, then it would be good to do it on the newer library, which will be nicer to code. Features include better support for authentication errors, neater code re-use (mixins FTW) and just generally a more robust approach.
+
+
 # Nacre
 
 Nacre is a Ruby gem that wraps the API of the Brightpearl accounting software service.
